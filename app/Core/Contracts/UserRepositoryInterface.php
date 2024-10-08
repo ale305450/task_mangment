@@ -8,6 +8,6 @@ use App\Core\Entities\User;
 
 interface UserRepositoryInterface
 {
-    public function login(LoginDTO $loginDTO): string;
     public function register(RegisterDTO $registerDTO): User;
+    public function login(LoginDTO $loginDTO): string;
 }

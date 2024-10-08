@@ -78,7 +78,7 @@ class CategoryController extends Controller
     /**
      * Delete category.
      */
-    public function destroy($id)
+    public function delete($id)
     {
         //Delete the categoty by it id
         $this->categoryRepository->delete($id);
