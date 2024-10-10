@@ -13,8 +13,17 @@ class Category extends Model
         'name',
     ];
 
+    /**
+     * Releationships
+     */
+
     public function projects()
     {
         return $this->hasMany(Project::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

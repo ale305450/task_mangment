@@ -15,8 +15,16 @@ class Project extends Model
         'category_id'
     ];
 
+    /**
+     * Releationships
+     */
     public function categories()
     {
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

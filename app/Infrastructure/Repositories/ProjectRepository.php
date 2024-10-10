@@ -11,12 +11,10 @@ class ProjectRepository implements ProjectRepositoryInterface
 {
     public function all(): Collection
     {
-        //$categorirs = Project::select('id', 'name', 'description')->with('categories')->get();
         $projects = Project::select('id', 'name', 'description', 'category_id')
             ->with('categories:id,name') // Here we are explicitly selecting the fields we want
             ->get();
-        dd($projects);
-        return Project::select('id', 'name', 'description')->with('category')->get();
+        return $projects;
     }
     public function create(ProjectDTO $projectDTO): Project
     {
