@@ -71,7 +71,7 @@ class TaskController extends Controller
      */
     public function complete($id)
     {
-        //Delete the task by it id
+        //change the task status to completed using it id
         $task = $this->taskRepository->completed($id);
 
         return response()->json([

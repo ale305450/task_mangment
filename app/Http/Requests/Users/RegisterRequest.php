@@ -27,7 +27,8 @@ class RegisterRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:3']
+            'password' => ['required', 'min:3'],
+            'role' => ['required']
         ];
     }
 
@@ -51,6 +52,6 @@ class RegisterRequest extends FormRequest
 
     public function toDto(): RegisterDTO
     {
-        return new RegisterDTO($this->name, $this->email, $this->password);
+        return new RegisterDTO($this->name, $this->email, $this->password, $this->role);
     }
 }

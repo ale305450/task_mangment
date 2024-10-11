@@ -12,7 +12,7 @@ class TaskDTO
     public string $status;
     public Carbon  $due_date;
     public int $category_id;
-    public int $user_id;
+    public array $user_id;
     public int $project_id;
 
     public function __construct(
@@ -21,7 +21,7 @@ class TaskDTO
         string $status,
         Carbon $due_date,
         int $category_id,
-        int $user_id,
+        array $user_id,
         int $project_id
     ) {
         $this->title = $title;

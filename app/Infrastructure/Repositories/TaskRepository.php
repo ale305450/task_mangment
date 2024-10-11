@@ -6,12 +6,13 @@ use App\Core\Contracts\TaskRepositoryInterface;
 use App\Core\DTOs\Tasks\TaskDTO;
 use App\Core\Entities\Task;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Gate;
 
 class TaskRepository implements TaskRepositoryInterface
 {
     public function all(): Collection
     {
-        return Task::with(['users', 'projects', 'categories'])->get();
+        return Task::with(['users:id,name,email', 'projects:id,name', 'categories:id,name'])->get();
     }
     public function create(TaskDTO $taskDTO): Task
     {
@@ -29,11 +30,13 @@ class TaskRepository implements TaskRepositoryInterface
     }
     public function find($id): Task
     {
-        return Task::find($id);
+        return Task::with(['users:id,name,email', 'projects:id,name', 'categories:id,name'])->findOrFail($id);
     }
     public function update($id, TaskDTO $taskDTO): Task
     {
         $task  = $this->find($id);
+        //check if the user is the owner of the project the task belongs to
+        Gate::authorize('update', $task);
         $task->update([
             'title' => $taskDTO->title,
             'description' => $taskDTO->description,
@@ -50,12 +53,15 @@ class TaskRepository implements TaskRepositoryInterface
     public function delete($id)
     {
         $task = $this->find($id);
+        //check if the user is the owner of the project the task belongs to
+        Gate::authorize('delete', $task);
         $task->delete();
     }
     public function completed($id): Task
     {
         $task = $this->find($id);
-        $task->status = 'status';
+        $task->status = 'completed';
+        $task->update();
         return  $task;
     }
 }

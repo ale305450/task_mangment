@@ -32,7 +32,6 @@ class ProjectController extends Controller
     public function store(CreateProjectRequest $request)
     {
         $project = $this->projectRepository->create($request->toDto());
-
         return response()->json(['data' => $project]);
     }
 

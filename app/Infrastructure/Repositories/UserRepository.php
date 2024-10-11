@@ -20,7 +20,7 @@ class UserRepository implements UserRepositoryInterface
                 'password' => $registerDTO->password,
             ]
         );
-        $user->assignRole('Employee');
+        $user->assignRole($registerDTO->role);
         return $user;
     }
     public function login(LoginDTO $loginDTO): string
@@ -38,8 +38,7 @@ class UserRepository implements UserRepositoryInterface
     public function logout(Request $request)
     {
         //logout out the current user
-        Auth::logout();
-
+        Auth::guard('web')->logout();
         $request->session()->flush();
         $request->session()->regenerate();
     }

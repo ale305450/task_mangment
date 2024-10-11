@@ -6,6 +6,8 @@ use App\Core\Contracts\ProjectRepositoryInterface;
 use App\Core\DTOs\Projects\ProjectDTO;
 use App\Core\Entities\Project;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectRepository implements ProjectRepositoryInterface
 {
@@ -18,11 +20,13 @@ class ProjectRepository implements ProjectRepositoryInterface
     }
     public function create(ProjectDTO $projectDTO): Project
     {
+        //Get the id of the current user
+        $user_id = Auth::user()->id;
         return Project::create([
             'name' => $projectDTO->name,
             'description' => $projectDTO->description,
             'category_id' => $projectDTO->category_id,
-            'user_id' => $projectDTO->user_id,
+            'user_id' => $user_id,
         ]);
     }
     public function find($id): Project
@@ -32,6 +36,9 @@ class ProjectRepository implements ProjectRepositoryInterface
     public function update($id, ProjectDTO $projectDTO): Project
     {
         $project = $this->find($id);
+        //check the user if it is the owner of the project
+        Gate::authorize('update', $project);
+
         $project->update([
             'name' => $projectDTO->name,
             'description' => $projectDTO->description,
@@ -42,6 +49,8 @@ class ProjectRepository implements ProjectRepositoryInterface
     public function delete($id)
     {
         $project = $this->find($id);
+        //check if the user is the owner of the project
+        Gate::authorize('delete', $project);
         $project->delete();
     }
 }

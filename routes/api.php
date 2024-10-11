@@ -40,7 +40,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('task/{task}', [TaskController::class, 'show']);
     Route::put('task/{task}', [TaskController::class, 'update'])->middleware('permission:Edit-task');
     Route::delete('task/{task}', [TaskController::class, 'delete'])->middleware('permission:Delete-task');
-    Route::post('task/{task}', [TaskController::class, 'complete'])->middleware('permission:Task-compelete');
+    Route::get('task/complete/{task}', [TaskController::class, 'complete'])->middleware('permission:Task-compelete');
 
-    Route::post('logout', [UserController::class, 'logout']);
+    Route::middleware(['web'])->group(function () {
+        Route::post('logout', [UserController::class, 'logout'])->name('logout');
+    });
+    //Route::post('logout', [UserController::class, 'logout']);
 });
