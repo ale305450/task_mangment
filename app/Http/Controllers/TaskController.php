@@ -65,4 +65,18 @@ class TaskController extends Controller
             'success' => 'The task has been deleted'
         ]);
     }
+
+    /**
+     * Change the task status.
+     */
+    public function complete($id)
+    {
+        //Delete the task by it id
+        $task = $this->taskRepository->completed($id);
+
+        return response()->json([
+            'success' => 'The task has been completed',
+            'data' => $task
+        ]);
+    }
 }

@@ -6,19 +6,22 @@ use App\Core\Contracts\UserRepositoryInterface;
 use App\Core\Dtos\Users\LoginDTO;
 use App\Core\Dtos\Users\RegisterDTO;
 use App\Core\Entities\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserRepository implements UserRepositoryInterface
 {
     public function register(RegisterDTO $registerDTO): User
     {
-        return User::create(
+        $user = User::create(
             [
                 'name' => $registerDTO->name,
                 'email' => $registerDTO->email,
                 'password' => $registerDTO->password,
             ]
         );
+        $user->assignRole('Employee');
+        return $user;
     }
     public function login(LoginDTO $loginDTO): string
     {
@@ -31,6 +34,14 @@ class UserRepository implements UserRepositoryInterface
         } else {
             return 'There is error in email or password';
         }
+    }
+    public function logout(Request $request)
+    {
+        //logout out the current user
+        Auth::logout();
+
+        $request->session()->flush();
+        $request->session()->regenerate();
     }
     private function findUser($email): User
     {

@@ -34,4 +34,16 @@ class UserController extends Controller
         $token = $this->userRepositroy->login($request->toDto());
         return response()->json(['token' => $token]);
     }
+
+    /**
+     * Logout function.
+     */
+    public function logout(Request $request)
+    {
+        //logout user
+        $this->userRepositroy->logout($request);
+        return response()->json([
+            'success' => 'You have logged out successfully '
+        ]);
+    }
 }

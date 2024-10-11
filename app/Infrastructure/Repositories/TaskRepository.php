@@ -52,4 +52,10 @@ class TaskRepository implements TaskRepositoryInterface
         $task = $this->find($id);
         $task->delete();
     }
+    public function completed($id): Task
+    {
+        $task = $this->find($id);
+        $task->status = 'status';
+        return  $task;
+    }
 }

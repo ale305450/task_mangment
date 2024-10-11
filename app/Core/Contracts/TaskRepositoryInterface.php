@@ -13,4 +13,5 @@ interface TaskRepositoryInterface
     public function find($id): Task;
     public function update($id, TaskDTO $data): Task;
     public function delete($id);
+    public function completed($id);
 }

@@ -12,7 +12,8 @@ class Project extends Model
     protected $fillable = [
         'name',
         'description',
-        'category_id'
+        'category_id',
+        'user_id'
     ];
 
     /**
@@ -21,6 +22,11 @@ class Project extends Model
     public function categories()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function tasks()

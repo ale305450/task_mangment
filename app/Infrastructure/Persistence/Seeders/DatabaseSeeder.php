@@ -1,10 +1,13 @@
 <?php
 
-namespace Database\Seeders;
-
+namespace App\Infrastructure\Persistence\Seeders;
+//
 use App\Core\Entities\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Infrastructure\Persistence\Seeders\PermissionSeeder;
+use App\Infrastructure\Persistence\Seeders\RoleSeeder;
+use App\Infrastructure\Persistence\Seeders\DefaultUserSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            PermissionSeeder::class,
+            RoleSeeder::class,
+            DefaultUserSeeder::class,
         ]);
     }
 }

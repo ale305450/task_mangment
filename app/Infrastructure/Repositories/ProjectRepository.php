@@ -21,7 +21,8 @@ class ProjectRepository implements ProjectRepositoryInterface
         return Project::create([
             'name' => $projectDTO->name,
             'description' => $projectDTO->description,
-            'category_id' => $projectDTO->category_id
+            'category_id' => $projectDTO->category_id,
+            'user_id' => $projectDTO->user_id,
         ]);
     }
     public function find($id): Project
